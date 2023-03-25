@@ -1,32 +1,80 @@
 package org.example;
 
+import com.google.gson.Gson;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.HashMap;
 
 public class Main {
+    public static String firstDexMd5 = null;
+
     public static void main(String[] args) {
         try {
+            Main.doIt("/home/u1/1/build/src/classes.dex", "/home/u1/1/build/assets/70e8f53d6b128db1c7844dca43fec501", 66);
+            Main.doIt("/home/u1/1/build/src/classes2.dex", "/home/u1/1/build/assets/70e8f53d6b128db1c7844dca43fec502", 66);
             if (true) {
-                String encStr = new Main().encString("ok", "1234567890123456", "1234567890123456");
-                System.out.println(encStr);
-                String decStr = new Main().decString(encStr, "1234567890123456", "1234567890123456");
-                System.out.println(decStr);
-                return;
+                // key and iv from md5 sum result from first dex file decode
+                System.out.println("系统配置文件加密");
+                System.out.println("ki: " + Main.firstDexMd5);
+                HashMap<String, String> conf = new HashMap<>();
+                conf.put("v2", "opt");
+                conf.put("v3", "pathList");
+                conf.put("v4", "dexElements");
+                conf.put("v5", "makePathElements");
+                conf.put("v6", "attach");
+                conf.put("v7", "android.app.ContextImpl");
+                conf.put("v8", "mOuterContext");
+                conf.put("v9", "mMainThread");
+                conf.put("v10", "android.app.ActivityThread");
+                conf.put("v11", "mInitialApplication");
+                conf.put("v12", "mAllApplications");
+                conf.put("v13", "mPackageInfo");
+                conf.put("v14", "android.app.LoadedApk");
+                conf.put("v15", "mApplication");
+                conf.put("v16", "mApplicationInfo");
+                conf.put("v17", "deb");
+                conf.put("v18", ".dex");
+                String json = new Gson().toJson(conf);
+                System.out.println("json: " + json);
+                String encJson = encString(json, firstDexMd5.substring(0, 16), firstDexMd5.substring(16));
+                System.out.println("enc: " + encJson);
             }
-            new Main().doIt("/home/u1/1/build/classes.dex", "/home/u1/1/build/assets/70e8f53d6b128db1c7844dca43fec501", 66);
-            new Main().doIt("/home/u1/1/build/classes2.dex", "/home/u1/1/build/assets/70e8f53d6b128db1c7844dca43fec502", 66);
+
+            if (true) {
+                String packageName = "com.wnsr001.cocosandroid";
+                byte[] bs = packageName.getBytes(StandardCharsets.UTF_8);
+                Arrays.sort(bs);
+                String ki = md5(bs);
+                String key = ki.substring(0, 16);
+                String iv = ki.substring(16);
+                System.out.println("应用配置文件");
+                System.out.println("ki: " + ki);
+                HashMap<String, Object> conf = new HashMap<>();
+                conf.put("v1", "org.App");
+                conf.put("v2", "66");
+                conf.put("v3", "70e8f53d6b128db1c7844dca43fec501");
+                conf.put("v4", "70e8f53d6b128db1c7844dca43fec502");
+                String json = new Gson().toJson(conf);
+                System.out.println("json: " + json);
+                String jsonEnc = encString(json, key, iv);
+                System.out.println("enc: " + jsonEnc);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public String decString(String encStr, String key, String iv) {
+    public static String decString(String encStr, String key, String iv) {
         String decStr = "";
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
@@ -42,7 +90,7 @@ public class Main {
         return decStr;
     }
 
-    public String encString(String txt, String key, String iv) {
+    public static String encString(String txt, String key, String iv) {
         String encStr = "";
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
@@ -50,7 +98,6 @@ public class Main {
             IvParameterSpec ivParameterSpec = new IvParameterSpec(iv.getBytes());
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
             byte[] bytes = cipher.doFinal(txt.getBytes());
-            System.out.println("enc len: " + bytes.length);
             encStr = Base64.getEncoder().encodeToString(bytes);
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,7 +105,7 @@ public class Main {
         return encStr;
     }
 
-    public void doIt(String src, String target, int num) throws Exception {
+    public static void doIt(String src, String target, int num) throws Exception {
         File srcFile = new File(src);
         File targetFile = new File(target);
         int srcLen = (int) srcFile.length();
@@ -75,5 +122,20 @@ public class Main {
             targetBytes[i] = b2;
         }
         new FileOutputStream(targetFile).write(targetBytes);
+        if (firstDexMd5 == null) {
+            firstDexMd5 = md5(srcBytes);
+        }
+    }
+
+    public static String md5(byte[] bs) {
+        String s = "";
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("md5");
+            byte[] digest = md5.digest(bs);
+            s = new BigInteger(1, digest).toString(16);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return s;
     }
 }
