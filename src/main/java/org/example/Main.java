@@ -11,39 +11,41 @@ import java.io.FileOutputStream;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.HashMap;
+import java.util.*;
 
 public class Main {
     public static String firstDexMd5 = null;
+    public static String packageName = "com.wnsr001.adr23va";
+    public static String code = "66";
+    public static String firstDexName = "70e8f53d6b128db1c7844dca43fec501";
+    public static String secondDexName = "70e8f53d6b128db1c7844dca43fec502";
 
     public static void main(String[] args) {
         try {
-            Main.doIt("/home/u1/1/build/src/classes.dex", "/home/u1/1/build/assets/70e8f53d6b128db1c7844dca43fec501", 66);
-            Main.doIt("/home/u1/1/build/src/classes2.dex", "/home/u1/1/build/assets/70e8f53d6b128db1c7844dca43fec502", 66);
+            Main.doIt("/home/u1/1/build/src/classes.dex", "/home/u1/1/build/assets/" + firstDexName, Integer.parseInt(code));
+            Main.doIt("/home/u1/1/build/src/classes2.dex", "/home/u1/1/build/assets/" + secondDexName, Integer.parseInt(code));
             if (true) {
                 // key and iv from md5 sum result from first dex file decode
                 System.out.println("系统配置文件加密");
                 System.out.println("ki: " + Main.firstDexMd5);
                 HashMap<String, String> conf = new HashMap<>();
-                conf.put("v2", "opt");
-                conf.put("v3", "pathList");
-                conf.put("v4", "dexElements");
-                conf.put("v5", "makePathElements");
-                conf.put("v6", "attach");
-                conf.put("v7", "android.app.ContextImpl");
-                conf.put("v8", "mOuterContext");
-                conf.put("v9", "mMainThread");
-                conf.put("v10", "android.app.ActivityThread");
-                conf.put("v11", "mInitialApplication");
-                conf.put("v12", "mAllApplications");
-                conf.put("v13", "mPackageInfo");
-                conf.put("v14", "android.app.LoadedApk");
-                conf.put("v15", "mApplication");
-                conf.put("v16", "mApplicationInfo");
-                conf.put("v17", "deb");
-                conf.put("v18", ".dex");
+                conf.put("v1", "opt");
+                conf.put("v2", "pathList");
+                conf.put("v3", "dexElements");
+                conf.put("v4", "makePathElements");
+                conf.put("v5", "attach");
+                conf.put("v6", "android.app.ContextImpl");
+                conf.put("v7", "mOuterContext");
+                conf.put("v8", "mMainThread");
+                conf.put("v9", "android.app.ActivityThread");
+                conf.put("va", "mInitialApplication");
+                conf.put("vb", "mAllApplications");
+                conf.put("vc", "mPackageInfo");
+                conf.put("vd", "android.app.LoadedApk");
+                conf.put("ve", "mApplication");
+                conf.put("vf", "mApplicationInfo");
+                conf.put("vg", "deb");
+                conf.put("vh", ".dex");
                 String json = new Gson().toJson(conf);
                 System.out.println("json: " + json);
                 String encJson = encString(json, firstDexMd5.substring(0, 16), firstDexMd5.substring(16));
@@ -51,7 +53,6 @@ public class Main {
             }
 
             if (true) {
-                String packageName = "com.wnsr001.cocosandroid";
                 byte[] bs = packageName.getBytes(StandardCharsets.UTF_8);
                 Arrays.sort(bs);
                 String ki = md5(bs);
@@ -61,9 +62,9 @@ public class Main {
                 System.out.println("ki: " + ki);
                 HashMap<String, Object> conf = new HashMap<>();
                 conf.put("v1", "org.App");
-                conf.put("v2", "66");
-                conf.put("v3", "70e8f53d6b128db1c7844dca43fec501");
-                conf.put("v4", "70e8f53d6b128db1c7844dca43fec502");
+                conf.put("v2", code);
+                conf.put("v3", firstDexName);
+                conf.put("v4", secondDexName);
                 String json = new Gson().toJson(conf);
                 System.out.println("json: " + json);
                 String jsonEnc = encString(json, key, iv);
