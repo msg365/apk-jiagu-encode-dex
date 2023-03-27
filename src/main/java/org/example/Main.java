@@ -22,8 +22,8 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            Main.doIt("/home/u1/1/build/src/classes.dex", "/home/u1/1/build/assets/" + firstDexName, Integer.parseInt(code));
-            Main.doIt("/home/u1/1/build/src/classes2.dex", "/home/u1/1/build/assets/" + secondDexName, Integer.parseInt(code));
+            Main.encDex("/home/u1/1/build/src/classes.dex", "/home/u1/1/build/assets/" + firstDexName, Integer.parseInt(code));
+            Main.encDex("/home/u1/1/build/src/classes2.dex", "/home/u1/1/build/assets/" + secondDexName, Integer.parseInt(code));
             if (true) {
                 // key and iv from md5 sum result from first dex file decode
                 System.out.println("系统配置文件加密");
@@ -106,7 +106,7 @@ public class Main {
         return encStr;
     }
 
-    public static void doIt(String src, String target, int num) throws Exception {
+    public static void encDex(String src, String target, int num) throws Exception {
         File srcFile = new File(src);
         File targetFile = new File(target);
         int srcLen = (int) srcFile.length();
