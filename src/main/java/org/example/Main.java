@@ -65,6 +65,8 @@ public class Main {
                 conf.put("v2", code);
                 conf.put("v3", firstDexName);
                 conf.put("v4", secondDexName);
+                conf.put("v5", "AES/CBC/PKCS5Padding");
+                conf.put("v6", "AES");
                 String json = new Gson().toJson(conf);
                 System.out.println("json: " + json);
                 String jsonEnc = encString(json, key, iv);
