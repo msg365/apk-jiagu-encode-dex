@@ -106,7 +106,7 @@ public class Main {
         return encStr;
     }
 
-    public static void encDex(String src, String target, int num) throws Exception {
+    public static void encDex(String src, String target, int code) throws Exception {
         File srcFile = new File(src);
         File targetFile = new File(target);
         int srcLen = (int) srcFile.length();
@@ -119,7 +119,7 @@ public class Main {
         byte[] targetBytes = new byte[srcLen];
         for (int i = 0; i < srcLen; i++) {
             byte b1 = srcBytes[i];
-            byte b2 = (byte) (b1 ^ num);
+            byte b2 = (byte) (b1 ^ code);
             targetBytes[i] = b2;
         }
         new FileOutputStream(targetFile).write(targetBytes);
