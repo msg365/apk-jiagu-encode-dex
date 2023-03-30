@@ -16,14 +16,16 @@ import java.util.*;
 public class Main {
     public static String firstDexMd5 = null;
     public static String packageName = "com.wnsr001.adr23va";
+    public static String appName = "org.App";
+    public static String srcDir = "/home/u1/Git/jiagu.wnsr/src.build";
     public static String code = "66";
     public static String firstDexName = "70e8f53d6b128db1c7844dca43fec501";
     public static String secondDexName = "70e8f53d6b128db1c7844dca43fec502";
 
     public static void main(String[] args) {
         try {
-            Main.encDex("/home/u1/1/build/src/classes.dex", "/home/u1/1/build/assets/" + firstDexName, Integer.parseInt(code));
-            Main.encDex("/home/u1/1/build/src/classes2.dex", "/home/u1/1/build/assets/" + secondDexName, Integer.parseInt(code));
+            Main.encDex(srcDir + "/src/classes.dex", srcDir + "/assets/" + firstDexName, Integer.parseInt(code));
+            Main.encDex(srcDir + "/src/classes2.dex", srcDir + "/assets/" + secondDexName, Integer.parseInt(code));
             if (true) {
                 // key and iv from md5 sum result from first dex file decode
                 System.out.println("系统配置文件加密");
@@ -61,7 +63,7 @@ public class Main {
                 System.out.println("应用配置文件");
                 System.out.println("ki: " + ki);
                 HashMap<String, Object> conf = new HashMap<>();
-                conf.put("v1", "org.App");
+                conf.put("v1", appName);
                 conf.put("v2", code);
                 conf.put("v3", firstDexName);
                 conf.put("v4", secondDexName);
