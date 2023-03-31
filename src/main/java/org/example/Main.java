@@ -19,17 +19,18 @@ public class Main {
     public static String appName = "org.App";
     public static String srcDir = "/home/u1/Git/jiagu.wnsr/src.build";
     public static String code = "66";
-    public static String firstDexName = "70e8f53d6b128db1c7844dca43fec501";
-    public static String secondDexName = "70e8f53d6b128db1c7844dca43fec502";
+    public static String firstDexName = "57e23d39231552c3";
+    public static String secondDexName = "78a44c84c6d81951";
+    public static String dexKey = "78a44c8416d8195a";
+    public static String dexIv = "78a44c8426d8195b";
 
     public static void main(String[] args) {
         try {
-            Main.encDex(srcDir + "/src/classes.dex", srcDir + "/assets/" + firstDexName, Integer.parseInt(code));
-            Main.encDex(srcDir + "/src/classes2.dex", srcDir + "/assets/" + secondDexName, Integer.parseInt(code));
+            encFile(srcDir + "/src/classes.dex", srcDir + "/assets/" + firstDexName, dexKey, dexIv);
+            encFile(srcDir + "/src/classes2.dex", srcDir + "/assets/" + secondDexName, dexKey, dexIv);
             if (true) {
                 // key and iv from md5 sum result from first dex file decode
                 System.out.println("系统配置文件加密");
-                System.out.println("ki: " + Main.firstDexMd5);
                 HashMap<String, String> conf = new HashMap<>();
                 conf.put("v1", "opt");
                 conf.put("v2", "pathList");
@@ -50,7 +51,7 @@ public class Main {
                 conf.put("vh", ".dex");
                 String json = new Gson().toJson(conf);
                 System.out.println("json: " + json);
-                String encJson = encString(json, firstDexMd5.substring(0, 16), firstDexMd5.substring(16));
+                String encJson = encString(json, dexKey, dexIv);
                 System.out.println("enc: " + encJson);
             }
 
@@ -58,18 +59,17 @@ public class Main {
                 byte[] bs = packageName.getBytes(StandardCharsets.UTF_8);
                 Arrays.sort(bs);
                 String ki = md5(bs);
-                String key = ki.substring(0, 16);
-                String iv = ki.substring(16);
                 System.out.println("应用配置文件");
-                System.out.println("ki: " + ki);
                 HashMap<String, Object> conf = new HashMap<>();
                 conf.put("v1", appName);
                 conf.put("v2", code);
                 conf.put("v3", firstDexName);
                 conf.put("v4", secondDexName);
+                conf.put("v5", dexKey);
+                conf.put("v6", dexIv);
                 String json = new Gson().toJson(conf);
                 System.out.println("json: " + json);
-                String jsonEnc = encString(json, key, iv);
+                String jsonEnc = encString(json, ki.substring(0, 16), ki.substring(16));
                 System.out.println("enc: " + jsonEnc);
             }
         } catch (Exception e) {
@@ -91,6 +91,54 @@ public class Main {
             e.printStackTrace();
         }
         return decStr;
+    }
+
+    public static byte[] enc(byte[] bs, String key, String iv) {
+        byte[] rs = null;
+        try {
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
+            IvParameterSpec ivParameterSpec = new IvParameterSpec(iv.getBytes());
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
+            rs = cipher.doFinal(bs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public static byte[] dec(byte[] data, String key, String iv) {
+        byte[] rs = null;
+        try {
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "AES");
+            IvParameterSpec ivParameterSpec = new IvParameterSpec(iv.getBytes(StandardCharsets.UTF_8));
+            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
+            rs = cipher.doFinal(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+    public static void decFile(String srcPath, String destPath, String key, String iv) {
+        try {
+            byte[] src = new FileInputStream(srcPath).readAllBytes();
+            byte[] dec = dec(src, key, iv);
+            new FileOutputStream(destPath).write(dec);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void encFile(String srcPath, String destPath, String key, String iv) {
+        try {
+            byte[] src = new FileInputStream(srcPath).readAllBytes();
+            byte[] enc = enc(src, key, iv);
+            new FileOutputStream(destPath).write(enc);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static String encString(String txt, String key, String iv) {
