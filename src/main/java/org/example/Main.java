@@ -15,14 +15,14 @@ import java.util.*;
 
 public class Main {
     public static String firstDexMd5 = null;
-    public static String packageName = "com.wnsr001.adr23va";
+    public static String packageName = "com.qp1020.cocosandroid";
     public static String appName = "org.App";
-    public static String srcDir = "/home/u1/Git/jiagu.wnsr/src.build";
+    public static String srcDir = "/home/u1/Git/jiagu.amyh.v1/src.build";
     public static String code = "66";
-    public static String firstDexName = "57e23d39231552c3";
-    public static String secondDexName = "78a44c84c6d81951";
-    public static String dexKey = "78a44c8416d8195a";
-    public static String dexIv = "78a44c8426d8195b";
+    public static String firstDexName  = "a98ebd57715d94e0";
+    public static String secondDexName = "e117e07396a88670";
+    public static String dexKey = "4a5ff287270af486";
+    public static String dexIv  = "25e759dd35da57f9";
 
     public static void main(String[] args) {
         try {
