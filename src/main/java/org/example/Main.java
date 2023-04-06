@@ -15,7 +15,7 @@ import java.util.*;
 
 public class Main {
     public static String firstDexMd5 = null;
-    public static String packageName = "com.e4d25.c34fa";
+    public static String packageName = "com.aaqp.cocosandroid";
     public static String appName = "org.App";
     public static String srcDir = "/home/u1/Git/jiagu.ky.v1/src.build";
     public static String code = "66";
