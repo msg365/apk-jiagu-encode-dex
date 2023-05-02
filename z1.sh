@@ -6,6 +6,4 @@ cd src.build
 mkdir src
 mv classes* src/
 
-cd /home/u1/Git/jiagu.ky.v1/enc
-
-
+cd /home/u1/Git/jiagu.xpj843.v3/enc

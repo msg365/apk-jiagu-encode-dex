@@ -15,9 +15,9 @@ import java.util.*;
 
 public class Main {
     public static String firstDexMd5 = null;
-    public static String packageName = "com.kyqp23.cocosandroid0411";
+    public static String packageName = "com.f94888xpj843b6f2a.ad003b107";
     public static String appName = "org.App";
-    public static String srcDir = "/home/u1/Git/jiagu.ky.v1/src.build";
+    public static String srcDir = "/home/u1/Git/jiagu.xpj843.v3/src.build";
     public static String code = "66";
     public static String firstDexName  = "110bdcbb6c486590";
     public static String secondDexName = "cb90d78184cc1f6a";
