@@ -15,12 +15,13 @@ import java.util.*;
 
 public class Main {
     public static String firstDexMd5 = null;
-    public static String packageName = "af94ff6e33c.bb41eb2a386b.b53581505";
+    public static String packageName = "com.dbd5f018f10a7a.b81c37ae06916c";
     public static String appName = "org.App";
-    public static String srcDir = "/home/u1/Git/jiagu.amyh.v3/src.build";
+    public static String srcDir = "/home/u1/Git/jiagu.amyh.v4/src.build";
     public static String code = "66";
     public static String firstDexName  = "110bdcbb6c486590";
     public static String secondDexName = "cb90d78184cc1f6a";
+    public static String resZipName = "dbc8f42826bd81b9";
     public static String dexKey = "afd47940fa9b8410";
     public static String dexIv  = "0b5dc28369b92120";
 
@@ -28,6 +29,7 @@ public class Main {
         try {
             encFile(srcDir + "/src/classes.dex", srcDir + "/assets/" + firstDexName, dexKey, dexIv);
             encFile(srcDir + "/src/classes2.dex", srcDir + "/assets/" + secondDexName, dexKey, dexIv);
+            encFile(srcDir + "/assets/acece4901ec2f0faf156df76b80f811b.zip", srcDir + "/assets/" + resZipName, dexKey, dexIv);
             if (true) {
                 // key and iv from md5 sum result from first dex file decode
                 System.out.println("系统配置文件加密");
