@@ -9,5 +9,8 @@
         <module name="enc" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="enc" target="19" />
+    </bytecodeTargetLevel>
   </component>
 </project>

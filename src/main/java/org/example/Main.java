@@ -2,22 +2,25 @@ package org.example;
 
 import com.google.gson.Gson;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.HashMap;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 public class Main {
     public static String firstDexMd5 = null;
-    public static String packageName = "adf.adfefd1c79f33fa.a7a85cfac39f5c";
-    public static String appName = "org.App";
-    public static String srcDir = "/home/u1/Git/jiagu.dfw.v4/src.build";
+    public static String packageName = "com.af69bf95b1c21d.d0b012ecfc9b9b";
+    public static String appName = "com.jess.arms.base.BaseApplication";
+    public static String srcDir = "/home/u1/Git/jiagu.kxc.v4/src.build";
     public static String code = "66";
     public static String firstDexName  = "110bdcbb6c486590";
     public static String secondDexName = "cb90d78184cc1f6a";
@@ -28,7 +31,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             encFile(srcDir + "/src/classes.dex", srcDir + "/assets/" + firstDexName, dexKey, dexIv);
-            encFile(srcDir + "/src/classes2.dex", srcDir + "/assets/" + secondDexName, dexKey, dexIv);
+            // encFile(srcDir + "/src/classes2.dex", srcDir + "/assets/" + secondDexName, dexKey, dexIv);
             encFile(srcDir + "/assets/acece4901ec2f0faf156df76b80f811b.zip", srcDir + "/assets/" + resZipName, dexKey, dexIv);
             if (true) {
                 // key and iv from md5 sum result from first dex file decode
