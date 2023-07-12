@@ -25,8 +25,8 @@ public class Main {
     public static String firstDexName  = "110bdcbb6c486590";
     public static String secondDexName = "cb90d78184cc1f6a";
     public static String resZipName = "dbc8f42826bd81b9";
-    public static String dexKey = "afd47940fa9b8410";
-    public static String dexIv  = "0b5dc28369b92120";
+    public static String dexKey = "afd47940fa9b8411";
+    public static String dexIv  = "0b5dc28369b92121";
 
     public static void main(String[] args) {
         try {
