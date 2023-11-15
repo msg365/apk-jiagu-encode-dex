@@ -18,7 +18,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Main {
     public static String firstDexMd5 = null;
-    public static String packageName = "com.zkxc91ez.xOc14f08x.xikju86yx";
+    public static String packageName = "com.kxc191ez.xOc14f08x2xikju86yx";
     public static String appName = "com.jess.arms.base.BaseApplication";
     public static String srcDir = "/home/u1/Git/jiagu.kxc.v4/src.build";
     public static String code = "66";
